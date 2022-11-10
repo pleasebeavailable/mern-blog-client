@@ -1,7 +1,8 @@
 import createSagaMiddleware from 'redux-saga'
 import {configureStore,} from '@reduxjs/toolkit';
-import sectionSaga from "./sagas/section-saga";
-import section from "./reducers/section";
+import getReducers from "./index";
+import logger from "redux-logger";
+import rootSaga from "./sagas/root-saga";
 
 // configuration
 const config = {
@@ -15,12 +16,9 @@ const sagaMiddleware = createSagaMiddleware({
 });
 
 export const store = configureStore({
-      // getReducers(),
-      reducer: section,
+      reducer: getReducers(),
       initialState: {},
-      middleware: getDefaultMiddleware => getDefaultMiddleware().concat(
-          sagaMiddleware)
+      middleware: [sagaMiddleware, logger]
     }
 );
-sagaMiddleware.run(sectionSaga);
-
+sagaMiddleware.run(rootSaga);

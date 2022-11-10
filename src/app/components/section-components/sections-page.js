@@ -8,9 +8,12 @@ export default function SectionsPage() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSections());
-  }, []);
-  return (<React.Fragment>
-        <SectionsScreen />
-      </React.Fragment>);
+  }, [dispatch]);
+
+  return (
+      <React.Fragment>
+        <SectionsScreen/>
+      </React.Fragment>
+  );
 }
 

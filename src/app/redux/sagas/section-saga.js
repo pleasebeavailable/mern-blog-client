@@ -8,12 +8,7 @@ function* getSections() {
 }
 
 function* sectionSaga() {
-  try {
     yield takeEvery(GET_SECTIONS, getSections);
-
-  } catch (e) {
-    console.log(e)
-  }
 }
 
 export default sectionSaga;

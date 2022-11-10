@@ -1,7 +1,7 @@
-import {GET_SECTIONS_SUCCESS} from "../actions/section";
+import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../actions/section";
 
 const initialState = {
-  sections: []
+  sections: [], isLoading: false
 };
 
 export default function section(
@@ -9,10 +9,10 @@ export default function section(
     action: Object
 ) {
   switch (action.type) {
+    case GET_SECTIONS:
+      return {...state, sections: [], isLoading: true}
     case GET_SECTIONS_SUCCESS: {
-      return Object.assign({}, state, {
-        sections: action.sections
-      });
+      return {...state, sections: action.sections, isLoading: false};
     }
     default:
       return state;
