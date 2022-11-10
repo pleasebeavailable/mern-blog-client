@@ -1,7 +1,7 @@
 import React from "react";
-import FeaturedPosts from "./featured-posts.js";
-import getPosts from "../../redux/actions/post";
 import {connect} from "react-redux";
+import getPosts from "../../redux/actions/post";
+import FeaturedPosts from "./featured-posts";
 
 class PostDataPage extends React.Component {
   constructor(props) {
@@ -13,23 +13,22 @@ class PostDataPage extends React.Component {
 
   componentDidMount() {
     try {
-      getPosts();
+      this.props.setPosts();
     } catch (err) {
       console.log(err)
     }
   }
 
   render() {
-    return (
-        <React.Fragment>
-          {this.state.isLoading && <p>Loading...</p>}
-          {!this.state.isLoading && <FeaturedPosts props={this.state.posts}/>}
-        </React.Fragment>);
+    return (<React.Fragment>
+      {this.state.isLoading && <p>Loading...</p>}
+      {!this.state.isLoading && <FeaturedPosts/>}
+    </React.Fragment>);
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  setPosts: getPosts
+  setPosts: () => dispatch(getPosts())
 });
 
 const mapStateToProps = state => ({
