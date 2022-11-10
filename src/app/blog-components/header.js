@@ -2,9 +2,9 @@ import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import Search from "../components/search-component/search.js";
 import SectionsPage from "../components/section-components/sections-page";
 import {useNavigate} from "react-router-dom";
+import Search from "../components/search-component/search";
 
 type Props = {
   title: string;
