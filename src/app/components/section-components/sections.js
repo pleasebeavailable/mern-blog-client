@@ -1,11 +1,10 @@
 import React from "react";
-import Toolbar from "@mui/material/Toolbar";
-import Link from "@mui/material/Link";
 import {useSelector} from 'react-redux';
+import {Link, Toolbar} from "@mui/material";
 
 export default function SectionsScreen() {
 
-  const sections = useSelector(state => state);
+  const sections = useSelector(state => state.sections);
   return (
       <React.Fragment>
         <Toolbar

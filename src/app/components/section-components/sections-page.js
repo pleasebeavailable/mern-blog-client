@@ -1,19 +1,16 @@
 import React, {useEffect} from "react";
-import {connect} from 'react-redux';
-import {getSections} from "../../redux/actions/section.js";
+import {useDispatch} from 'react-redux';
+import {getSections} from "../../redux/actions/section";
+import SectionsScreen from "./sections";
 
-function SectionsPage() {
+export default function SectionsPage() {
+
+  const dispatch = useDispatch();
   useEffect(() => {
-    getSections();
+    dispatch(getSections());
   }, []);
-  return (
-      <React.Fragment>
-        {/*<SectionsScreen/>*/}
-      </React.Fragment>
-  );
+  return (<React.Fragment>
+        <SectionsScreen />
+      </React.Fragment>);
 }
 
-const mapDispatch = {
-  setSections: getSections
-}
-export default connect(null, mapDispatch)(SectionsPage);
