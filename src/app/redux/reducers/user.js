@@ -1,3 +1,5 @@
+import {LOGIN_USER, LOGOUT_USER, USER_INFO} from "../../constants/constants";
+
 const initialState = {
   isAuthenticated: false, user: {},
 };
@@ -9,13 +11,14 @@ export default function user(
   const {type, payload} = action;
 
   switch (type) {
-    case 'LOG_IN_USER': {
+    case LOGIN_USER: {
+
       return Object.assign({}, state, payload)
     }
-    case 'LOG_OUT_USER': {
+    case LOGOUT_USER: {
       return Object.assign({}, state, payload)
     }
-    case 'USER_INFO': {
+    case USER_INFO: {
       return Object.assign({}, state, payload)
     }
     default:

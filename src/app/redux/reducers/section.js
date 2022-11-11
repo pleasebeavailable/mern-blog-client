@@ -1,4 +1,4 @@
-import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../actions/section";
+import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../../constants/constants";
 
 const initialState = {
   sections: [], isLoading: false

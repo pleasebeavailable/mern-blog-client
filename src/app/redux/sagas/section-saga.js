@@ -1,6 +1,6 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getAllSections} from "../../services/section-service";
-import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../actions/section";
+import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../../constants/constants";
 
 function* getSections() {
   const sections = yield call(getAllSections);

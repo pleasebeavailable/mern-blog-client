@@ -1,10 +1,7 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {signup} from "../../services/registration-service";
+import {LOGIN_USER_SUCCESS, REGISTER_USER} from "../../constants/constants";
 
-export const REGISTER_USER = 'REGISTER_USER';
-export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
-export const LOGIN_USER = 'LOGIN_USER';
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 
 function* registerUser(payload) {
   const posts = yield call(signup(payload));

@@ -1,4 +1,8 @@
-import {REGISTER_USER} from "../sagas/user-saga";
+import {
+  LOGIN_USER,
+  LOGOUT_USER,
+  REGISTER_USER, USER_INFO
+} from "../../constants/constants";
 
 export const registerUser = (payload) => {
   return {
@@ -9,21 +13,21 @@ export const registerUser = (payload) => {
 
 export const loginAction = (payload) => {
   return {
-    type: 'LOGIN_USER',
+    type: LOGIN_USER,
     payload,
   };
 };
 
 export const logoutAction = (payload) => {
   return {
-    type: 'LOGOUT_USER',
+    type: LOGOUT_USER,
     payload,
   };
 };
 
 export const infoAction = (payload) => {
   return {
-    type: 'USER_INFO',
+    type: USER_INFO,
     payload,
   };
 };

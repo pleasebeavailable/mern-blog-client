@@ -1,8 +1,6 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getAllPosts} from "../../services/post-service";
-
-export const GET_POSTS = 'GET_POSTS';
-export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
+import {GET_POSTS, GET_POSTS_SUCCESS} from "../../constants/constants";
 
 function* getPosts() {
   try {
