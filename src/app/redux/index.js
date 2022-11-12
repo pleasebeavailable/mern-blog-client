@@ -3,11 +3,12 @@ import section from './reducers/section';
 import post from './reducers/post';
 import user from './reducers/user';
 
-const getReducers = () => {
+const getReducers = (router) => {
   return combineReducers({
+    router: router,
     post,
     section,
-    user
+    user,
   });
 };
 
