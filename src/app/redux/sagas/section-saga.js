@@ -3,8 +3,13 @@ import {getAllSections} from "../../services/section-service";
 import {GET_SECTIONS, GET_SECTIONS_SUCCESS} from "../../constants/constants";
 
 function* getSections() {
-  const sections = yield call(getAllSections);
-  yield put({type: GET_SECTIONS_SUCCESS, sections});
+  try {
+    const sections = yield call(getAllSections);
+    yield put({type: GET_SECTIONS_SUCCESS, sections});
+
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 function* sectionSaga() {

@@ -9,5 +9,5 @@ export async function signup(req: SignupRequest) {
 
 export async function login(req: LoginRequest) {
   const response = await axios.post(`/user/login`, {user: req});
-  return await response.data;
+  return response.data;
 }
