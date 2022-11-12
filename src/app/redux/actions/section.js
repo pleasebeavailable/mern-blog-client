@@ -1,3 +1,4 @@
+import {GET_SECTIONS} from "../../constants/constants";
 
 export const getSections = (payload) => {
   return {

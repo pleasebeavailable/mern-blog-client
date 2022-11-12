@@ -1,4 +1,4 @@
-import {GET_POSTS, GET_POSTS_SUCCESS} from "../sagas/post-saga";
+import {GET_POSTS, GET_POSTS_SUCCESS} from "../../constants/constants";
 
 const initialState = {
   posts: [],

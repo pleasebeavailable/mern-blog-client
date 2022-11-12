@@ -1,7 +1,6 @@
-import {GET_POSTS} from "../sagas/post-saga";
+import {GET_POSTS} from "../../constants/constants";
 
 export const getPosts = (payload) => {
-  console.log(payload)
   return {
     type: GET_POSTS,
   };
