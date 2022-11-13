@@ -9,7 +9,7 @@ import {
   READ_POST_SUCCESS
 } from "../../constants/constants";
 import {push} from "redux-first-history";
-import {POST_ROUTE} from "../../constants/routes";
+import {POST_ROUTE, SECTION_POSTS} from "../../constants/routes";
 
 function* getPosts() {
   try {
@@ -22,7 +22,8 @@ function* getPosts() {
 
 function* getSectionPosts() {
   try {
-    const posts = yield call(getAllSectionPosts);
+    const posts = yield call(getAllPosts);
+    yield put(push(SECTION_POSTS))
     yield put({type: GET_SECTION_POSTS_SUCCESS, posts});
   } catch (err) {
     console.log(err)

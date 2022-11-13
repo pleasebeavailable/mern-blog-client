@@ -1,11 +1,17 @@
 import React from "react";
 import {Link, Toolbar} from "@mui/material";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getSectionPosts, readPost} from "../../redux/actions/post";
+import {GET_SECTION_POSTS} from "../../constants/constants";
 
 export default function SectionsScreen() {
   const sectionsState = useSelector(state => state.section);
   const sections = sectionsState.sections;
+  const dispatch = useDispatch();
 
+  const goToSectionPosts = (payload) => {
+    dispatch(getSectionPosts({route: GET_SECTION_POSTS, payload}));
+  };
   const ConditionalRender = () => {
     if (sectionsState.isLoading) {
       return <div>Loading...</div>
@@ -21,7 +27,7 @@ export default function SectionsScreen() {
                 style={{textDecoration: 'none'}}
                 noWrap
                 variant="body2"
-                href={section.url}
+                onClick={() => goToSectionPosts(section.title)}
                 sx={{p: 1, flexShrink: 0}}
             >
               {section.title}
