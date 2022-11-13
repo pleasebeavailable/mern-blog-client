@@ -2,11 +2,11 @@ import createSagaMiddleware from 'redux-saga';
 import {configureStore,} from '@reduxjs/toolkit';
 import getReducers from "./index";
 import rootSaga from "./sagas/root-saga";
-import createSagaMonitor from "@clarketm/saga-monitor";
 import {createReduxHistoryContext, reachify} from "redux-first-history";
 import {createBrowserHistory} from "history";
 import {createWouterHook} from "redux-first-history/wouter";
-import {logger} from "redux-logger/src";
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import {persistReducer} from 'redux-persist'
 
 // configuration
 const config = {
@@ -15,6 +15,12 @@ const config = {
   effectResolve: true,
   actionDispatch: true
 };
+
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage
+}
 
 const sagaMiddleware = createSagaMiddleware({
   // sagaMonitor: createSagaMonitor(config)
@@ -29,16 +35,19 @@ const {
   //other options if needed
 });
 
+const persistedReducer = persistReducer(persistConfig,
+    getReducers(routerReducer));
+
 export const store = configureStore({
-      reducer: getReducers(routerReducer),
+      reducer: persistedReducer,
       initialState: {},
-      // middleware: [sagaMiddleware]
-      middleware: [sagaMiddleware, routerMiddleware, logger]
+      middleware: [sagaMiddleware, routerMiddleware]
+      // middleware: [sagaMiddleware, routerMiddleware, logger]
     }
 );
 
 export const history = createReduxHistory(store);
-//if you use @reach/router
+//if you use @reach/router¬
 export const reachHistory = reachify(history);
 //if you use wouter
 export const wouterUseLocation = createWouterHook(history);
