@@ -13,8 +13,6 @@ const posts = ["post1", "post2", "post3"];
 
 export default function StartingPage() {
 
-  const user = useSelector(state => state);
-  console.log(user)
   return (
       <Container>
         <Header title="title"/>
@@ -22,7 +20,7 @@ export default function StartingPage() {
           <MainFeaturedPost/>
           <PostDataPage/>
           <Grid container spacing={5} sx={{mt: 3}}>
-            <Main title="From the firehose" posts={posts}/>
+            <Main title="Posts"/>
             <Sidebar/>
           </Grid>
         </main>

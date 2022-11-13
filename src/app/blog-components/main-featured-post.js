@@ -4,11 +4,19 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {readPost} from "../redux/actions/post";
+import {READ_POST} from "../constants/constants";
 
 export default function MainFeaturedPost() {
   const posts = useSelector(state => state.post.posts);
-  const randomPost = posts[Math.floor(Math.random() * posts.length)];
+  const post = posts[Math.floor(Math.random() * posts.length)];
+
+  const dispatch = useDispatch();
+  const goToPostScreen = () => {
+    dispatch(readPost({route: READ_POST, post}));
+  };
+
   const ConditionalRender = () => {
     if (posts.length === 0) {
       return <div/>
@@ -22,12 +30,12 @@ export default function MainFeaturedPost() {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundImage: `url(${randomPost.imageUrl})`,
+            backgroundImage: `url(${post.imageUrl})`,
           }}
       >
         {/* Increase the priority of the hero background image */}
-        {<img style={{display: 'none'}} src={randomPost.imageUrl}
-              alt={randomPost.imageLabel}/>}
+        {<img style={{display: 'none'}} src={post.imageUrl}
+              alt={post.imageLabel}/>}
         <Box
             sx={{
               position: 'absolute',
@@ -47,13 +55,15 @@ export default function MainFeaturedPost() {
             >
               <Typography component="h1" variant="h3" color="inherit"
                           gutterBottom>
-                {randomPost.title}
+                {post.title}
               </Typography>
               <Typography variant="h5" color="inherit" paragraph>
-                {randomPost.description}
+                {post.description.substring(0, 200) + "..."}
               </Typography>
-              <Link variant="subtitle1" href="#">
-                {randomPost.linkText}
+              <Link style={{textDecoration: 'none'}}
+                    noWrap
+                    variant="variant1" onClick={goToPostScreen}>
+                {post.linkText}
               </Link>
             </Box>
           </Grid>

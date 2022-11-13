@@ -3,15 +3,11 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import Markdown from './markdown.js';
+import {useSelector} from "react-redux";
 
-interface MainProps {
-  posts: ReadonlyArray<string>;
-  title: string;
-}
-
-export default function Main(props: MainProps) {
-  const {posts, title} = props;
-
+export default function Main(props) {
+  const {title} = props;
+  const posts = useSelector(state => state.post.posts);
   return (
       <Grid
           item
@@ -28,8 +24,8 @@ export default function Main(props: MainProps) {
         </Typography>
         <Divider/>
         {posts.map((post) => (
-            <Markdown className="markdown" key={post.substring(0, 40)}>
-              {post}
+            <Markdown className="markdown" key={post._id}>
+              {post.description}
             </Markdown>
         ))}
       </Grid>
