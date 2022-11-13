@@ -1,6 +1,12 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {getAllPosts} from "../../services/post-service";
-import {GET_POSTS, GET_POSTS_SUCCESS} from "../../constants/constants";
+import {
+  GET_POSTS,
+  GET_POSTS_SUCCESS,
+  READ_POST, READ_POST_SUCCESS
+} from "../../constants/constants";
+import {push} from "redux-first-history";
+import {POST_ROUTE} from "../../constants/routes";
 
 function* getPosts() {
   try {
@@ -11,8 +17,19 @@ function* getPosts() {
   }
 }
 
+function* readPost(payload) {
+  try {
+    console.log(payload)
+    yield put(push(POST_ROUTE))
+    yield put({type: READ_POST_SUCCESS, payload});
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 function* postSaga() {
   yield takeEvery(GET_POSTS, getPosts);
+  yield takeEvery(READ_POST, readPost);
 }
 
 export default postSaga;

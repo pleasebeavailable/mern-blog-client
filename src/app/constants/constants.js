@@ -14,6 +14,8 @@ export const USER_INFO = 'USER_INFO';
 // POST CONSTANTS
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GET_POSTS_SUCCESS';
+export const READ_POST = 'READ_POST';
+export const READ_POST_SUCCESS = 'READ_POST_SUCCESS';
 
 // SECTION CONSTANTS
 export const GET_SECTIONS = 'GET_SECTIONS';

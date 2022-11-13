@@ -8,6 +8,7 @@ import SignupContainer
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Route, Routes} from "react-router-dom";
 import LoginContainer from "./app/components/log-in-components/login-container";
+import PostScreen from "./app/components/post-components/post-screen";
 
 const theme = createTheme();
 
@@ -22,6 +23,7 @@ class App extends React.Component {
                 <Route exact path="/" element={<StartingPage/>}/>
                 <Route exact path="/signUp" element={<SignupContainer/>}/>
                 <Route exact path="/login" element={<LoginContainer/>}/>
+                <Route exact path="/post" element={<PostScreen/>}/>
               </Routes>
             </ThemeProvider>
           </MuiThemeProvider>
