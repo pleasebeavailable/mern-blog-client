@@ -1,12 +1,15 @@
 import {
   GET_POSTS,
-  GET_POSTS_SUCCESS, GET_SECTION_POSTS, GET_SECTION_POSTS_SUCCESS,
+  GET_POSTS_SUCCESS,
+  GET_SECTION_POSTS,
+  GET_SECTION_POSTS_SUCCESS,
   READ_POST_SUCCESS
 } from "../../constants/constants";
 
 const initialState = {
   posts: [],
   selectedPost: {},
+  selectedSection: "",
   isLoading: false,
   error: ""
 };
@@ -27,7 +30,12 @@ export default function postReducer(
       return {...state, isLoading: false, posts: action.posts}
     }
     case GET_SECTION_POSTS_SUCCESS: {
-      return {...state, isLoading: false, posts: action.posts}
+      return {
+        ...state,
+        isLoading: false,
+        posts: action.res.posts,
+        selectedSection: action.res.section
+      }
     }
     case READ_POST_SUCCESS: {
       return {

@@ -20,11 +20,12 @@ function* getPosts() {
   }
 }
 
-function* getSectionPosts() {
+function* getSectionPosts(payload) {
   try {
-    const posts = yield call(getAllPosts);
+    const posts = yield call(() => getAllSectionPosts(payload));
+    const res = {posts: posts, section: payload};
     yield put(push(SECTION_POSTS))
-    yield put({type: GET_SECTION_POSTS_SUCCESS, posts});
+    yield put({type: GET_SECTION_POSTS_SUCCESS, res});
   } catch (err) {
     console.log(err)
   }
