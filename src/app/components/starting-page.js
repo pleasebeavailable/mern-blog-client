@@ -7,10 +7,14 @@ import Header from "../blog-components/header.js";
 import {Container} from "@mui/system";
 import PostDataPage from "./post-components/post-data-page";
 import MainFeaturedPost from "../blog-components/main-featured-post";
+import {useSelector} from "react-redux";
 
 const posts = ["post1", "post2", "post3"];
 
 export default function StartingPage() {
+
+  const user = useSelector(state => state);
+  console.log(user)
   return (
       <Container>
         <Header title="title"/>

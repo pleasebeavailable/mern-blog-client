@@ -1,7 +1,6 @@
 import React from "react";
 import LoginRequest from "../../model/login-request";
 import LoginForm from "./login-form";
-import {login} from "../../services/registration-service";
 import {loginAction} from "../../redux/actions/user";
 import {connect} from "react-redux";
 
@@ -62,23 +61,7 @@ class LoginContainer extends React.Component {
   }
 
   submitLogin(user) {
-    login(user)
-    .then((res) => {
-      if (res.success === true) {
-        this.props.loginUser({isAuthenticated: true, user: user});
-        localStorage.token = res.token;
-        localStorage.isAuthenticated = true;
-        localStorage.user = user;
-        window.location.replace("/");
-      } else {
-        this.setState({
-          errors: {message: res.data.message},
-        });
-      }
-    })
-    .catch((err) => {
-      console.log("Sign up data submit error: ", err);
-    });
+    this.props.loginUser(user)
   }
 
   validateForm(event) {

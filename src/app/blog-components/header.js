@@ -3,8 +3,11 @@ import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SectionsPage from "../components/section-components/sections-page";
-import {useNavigate} from "react-router-dom";
 import Search from "../components/search-component/search";
+import {useDispatch, useSelector} from "react-redux";
+import navigate from "../redux/actions/navigate";
+import {LOGIN_ROUTE} from "../constants/routes";
+import {logoutAction} from "../redux/actions/user";
 
 type Props = {
   title: string;
@@ -13,12 +16,15 @@ type Props = {
 export default function Header(props: Props) {
   const {title} = props;
 
-  const navigate = useNavigate();
-
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.user);
   const goToLoginForm = () => {
-    navigate("/login");
+    dispatch(navigate({route: LOGIN_ROUTE}));
   };
 
+  const logout = () => {
+    dispatch(logoutAction())
+  };
   return (
       <React.Fragment>
         <Toolbar sx={{borderBottom: 1, borderColor: "divider"}}>
@@ -31,16 +37,20 @@ export default function Header(props: Props) {
               noWrap
               sx={{flex: 1}}
           >
-            {title}
+            Hello {user.user.username}
           </Typography>
           <Search style={{margin: "auto"}}/>
-          <Button
+          {!user.isAuthenticated && <Button
               variant="outlined"
               size="small"
               onClick={() => goToLoginForm()}
           >
             Log in
-          </Button>
+          </Button>}
+          {user.isAuthenticated && <Button
+              variant="outlined"
+              size="small"
+              onClick={() => logout()}>Log out</Button>}
         </Toolbar>
         <SectionsPage/>
     </React.Fragment>

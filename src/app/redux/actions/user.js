@@ -18,10 +18,9 @@ export const loginAction = (payload) => {
   };
 };
 
-export const logoutAction = (payload) => {
+export const logoutAction = () => {
   return {
     type: LOGOUT_USER,
-    payload,
   };
 };
 
