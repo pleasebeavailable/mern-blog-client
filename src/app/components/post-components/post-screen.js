@@ -3,23 +3,15 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import "./style.css";
 import {Container} from "@mui/system";
-import RaisedButton from "material-ui/RaisedButton";
-import {postNewComment} from "../../redux/actions/post";
+import Comments from "./comments";
 
 export default function PostScreen() {
-  const [comment, setComment] = React.useState("");
-  const dispatch = useDispatch();
+
   const post = useSelector(state => state.post.selectedPost);
 
-  const handleChange = (event) => setComment(event.target.value);
-
-  function postComment(event) {
-    event.preventDefault();
-    dispatch(postNewComment({postId: post._id, comment: comment}));
-  }
 
   return (<Container className="parent-container">
         <Typography className="margin-space" component="h2" variant="h5">
@@ -43,21 +35,8 @@ export default function PostScreen() {
               alt={post.imageLabel}
           />
         </Card>
-
-        <form className="comment" onSubmit={postComment}>
-          <textarea
-              value={comment}
-              onChange={handleChange}
-              placeholder="Write a comment!"
-              rows={5}
-          />
-          <br/>
-          <RaisedButton
-              primary={true}
-              type="submit"
-              label="post"
-          />
-        </form>
+        <br/>
+        <Comments post={post}/>
       </Container>
   );
 }

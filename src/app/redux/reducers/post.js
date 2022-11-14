@@ -11,6 +11,7 @@ const initialState = {
   posts: [],
   selectedPost: {},
   selectedSection: "",
+  comments: [],
   isLoading: false,
   error: ""
 };
@@ -39,17 +40,21 @@ export default function postReducer(
       }
     }
     case READ_POST_SUCCESS: {
+      console.log(action)
       return {
         ...state,
         isLoading: false,
-        selectedPost: action.payload.payload.post
+        selectedPost: action.response.post,
+        comments: action.response.comments
       }
     }
     case POST_COMMENT_SUCCESS: {
+      console.log("kad se desava?")
+      console.log(action)
       return {
         ...state,
         isLoading: false,
-        selectedPost: action.payload.payload.post
+        comments: action.comments
       }
     }
     default:

@@ -2,13 +2,15 @@ import {call, put, takeEvery} from "redux-saga/effects";
 import {
   getAllPosts,
   getAllSectionPosts,
+  getPostComments,
   postNewComment
 } from "../../services/post-service";
 import {
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
-  GET_SECTION_POSTS_SUCCESS, POST_COMMENT,
+  GET_SECTION_POSTS_SUCCESS,
+  POST_COMMENT,
   POST_COMMENT_SUCCESS,
   READ_POST,
   READ_POST_SUCCESS
@@ -39,7 +41,10 @@ function* getSectionPosts(payload) {
 function* readPost(payload) {
   try {
     yield put(push(POST_ROUTE))
-    yield put({type: READ_POST_SUCCESS, payload});
+    console.log(payload)
+    const comments = yield call(() => getPostComments(payload.payload.post._id))
+    var response = {post: payload.payload.post, comments: comments};
+    yield put({type: READ_POST_SUCCESS, response});
   } catch (err) {
     console.log(err)
   }
@@ -48,7 +53,8 @@ function* readPost(payload) {
 function* postComment(payload) {
   try {
     yield call(() => postNewComment(payload))
-    yield put({type: POST_COMMENT_SUCCESS, payload});
+    const comments = yield call(() => getPostComments(payload.payload.postId))
+    yield put({type: POST_COMMENT_SUCCESS, comments});
   } catch (err) {
     console.log(err)
   }
