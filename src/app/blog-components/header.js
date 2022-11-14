@@ -6,7 +6,7 @@ import SectionsPage from "../components/section-components/sections-page";
 import Search from "../components/search-component/search";
 import {useDispatch, useSelector} from "react-redux";
 import navigate from "../redux/actions/navigate";
-import {LOGIN_ROUTE, SIGNUP_ROUTE} from "../constants/routes";
+import {LOGIN_ROUTE} from "../constants/routes";
 import {logoutAction} from "../redux/actions/user";
 
 type Props = {

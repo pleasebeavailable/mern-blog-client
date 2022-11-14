@@ -21,7 +21,7 @@ export default function postReducer(
     state: typeof initialState = initialState,
     action: Object
 ) {
-  const {type, payload} = action;
+  const {type} = action;
   switch (type) {
     case GET_POSTS: {
       return {...state, isLoading: true, posts: []};

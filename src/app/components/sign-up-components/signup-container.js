@@ -1,10 +1,8 @@
 import React from "react";
 import SignupRequest from "../../model/signup-request.js";
-// @ts-ignore
 import SignupForm from "./signup-form.js";
 import {signup} from "../../services/user-service";
 
-const axios = require("axios");
 const FormValidators = require("./validate");
 const validateSignUpForm = FormValidators.validateSignUpForm;
 const zxcvbn = require("zxcvbn");

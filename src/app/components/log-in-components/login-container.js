@@ -4,9 +4,8 @@ import LoginForm from "./login-form";
 import {loginAction} from "../../redux/actions/user";
 import {connect} from "react-redux";
 import navigate from "../../redux/actions/navigate";
-import {LOGIN_ROUTE, SIGNUP_ROUTE} from "../../constants/routes";
+import {SIGNUP_ROUTE} from "../../constants/routes";
 
-const axios = require("axios");
 const FormValidators = require("./validate");
 const validateLoginForm = FormValidators.validateLoginForm;
 const zxcvbn = require("zxcvbn");
