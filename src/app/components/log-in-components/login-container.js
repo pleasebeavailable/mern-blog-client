@@ -3,6 +3,8 @@ import LoginRequest from "../../model/login-request";
 import LoginForm from "./login-form";
 import {loginAction} from "../../redux/actions/user";
 import {connect} from "react-redux";
+import navigate from "../../redux/actions/navigate";
+import {LOGIN_ROUTE, SIGNUP_ROUTE} from "../../constants/routes";
 
 const axios = require("axios");
 const FormValidators = require("./validate");
@@ -101,6 +103,7 @@ class LoginContainer extends React.Component {
               onSubmit={this.validateForm}
               onChange={this.handleChange}
               onPwChange={this.pwHandleChange}
+              goToSignUp={this.props.goToSignUp}
               errors={this.state.errors}
               user={this.state.user}
               type={this.state.type}
@@ -112,7 +115,8 @@ class LoginContainer extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: (data) => dispatch(loginAction(data))
+  loginUser: (data) => dispatch(loginAction(data)),
+  goToSignUp: () => dispatch(navigate({route: SIGNUP_ROUTE}))
 });
 
 export default connect(null, mapDispatchToProps)(LoginContainer);

@@ -6,7 +6,7 @@ import SectionsPage from "../components/section-components/sections-page";
 import Search from "../components/search-component/search";
 import {useDispatch, useSelector} from "react-redux";
 import navigate from "../redux/actions/navigate";
-import {LOGIN_ROUTE} from "../constants/routes";
+import {LOGIN_ROUTE, SIGNUP_ROUTE} from "../constants/routes";
 import {logoutAction} from "../redux/actions/user";
 
 type Props = {
@@ -29,7 +29,17 @@ export default function Header(props: Props) {
       <React.Fragment>
         <Toolbar sx={{borderBottom: 1, borderColor: "divider"}}>
           <Button size="small">Subscribe</Button>
-          <Typography
+          {!user.isAuthenticated && <Typography
+              component="h2"
+              variant="h5"
+              color="inherit"
+              align="center"
+              noWrap
+              sx={{flex: 1}}
+          >
+            {title}
+          </Typography>}
+          {user.isAuthenticated && <Typography
               component="h2"
               variant="h5"
               color="inherit"
@@ -38,7 +48,7 @@ export default function Header(props: Props) {
               sx={{flex: 1}}
           >
             Hello {user.user.username}
-          </Typography>
+          </Typography>}
           <Search style={{margin: "auto"}}/>
           {!user.isAuthenticated && <Button
               variant="outlined"

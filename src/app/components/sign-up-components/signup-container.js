@@ -135,6 +135,10 @@ class SignupContainer extends React.Component<{}, SignUpState> {
           type={this.state.type}
           pwMask={this.pwMask}
         />
+        {/*<p>*/}
+        {/*  Go to home screen? <br/>*/}
+        {/*  <div onClick={goToSignUp}>Home</div>*/}
+        {/*</p>*/}
       </div>
     );
   }

@@ -4,13 +4,14 @@ import TextField from "material-ui/TextField";
 import "./style.css";
 
 const LoginForm = ({
-                     onSubmit,
-                     onChange,
-                     errors,
-                     user,
-                     type,
-                     onPwChange,
-                   }) => {
+  onSubmit,
+  onChange,
+  goToSignUp,
+  errors,
+  user,
+  type,
+  onPwChange,
+}) => {
   return (
       <div className="loginBox">
         <h1>Log In</h1>
@@ -42,8 +43,8 @@ const LoginForm = ({
           />
         </form>
         <p>
-          Don't have an account? <br />
-          <a href="/signUp">Create account here</a>
+          Don't have an account? <br/>
+          <div onClick={goToSignUp}>Create account here</div>
         </p>
       </div>
   );
