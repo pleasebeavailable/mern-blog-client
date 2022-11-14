@@ -1,6 +1,8 @@
 import {
+  DELETE_COMMENT,
   GET_POSTS,
-  GET_SECTION_POSTS, POST_COMMENT,
+  GET_SECTION_POSTS,
+  POST_COMMENT,
   READ_POST
 } from "../../constants/constants";
 
@@ -20,6 +22,13 @@ export const getSectionPosts = (payload) => {
 export const postNewComment = (payload) => {
   return {
     type: POST_COMMENT,
+    payload
+  };
+};
+
+export const deleteComment = (payload) => {
+  return {
+    type: DELETE_COMMENT,
     payload
   };
 };

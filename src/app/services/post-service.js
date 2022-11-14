@@ -24,6 +24,12 @@ export async function postNewComment(payload) {
     postId: payload.payload.postId,
     comment: payload.payload.comment
   });
-  console.log("jeeej")
+  return await response.data;
+}
+
+export async function deleteSelectedComment(payload) {
+  console.log(payload)
+  const response = await axios.delete(
+      '/post/deleteComment/' + payload.payload.commentId);
   return await response.data;
 }

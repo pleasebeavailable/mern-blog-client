@@ -1,4 +1,5 @@
 import {
+  DELETE_COMMENT_SUCCESS,
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
@@ -40,7 +41,6 @@ export default function postReducer(
       }
     }
     case READ_POST_SUCCESS: {
-      console.log(action)
       return {
         ...state,
         isLoading: false,
@@ -49,8 +49,13 @@ export default function postReducer(
       }
     }
     case POST_COMMENT_SUCCESS: {
-      console.log("kad se desava?")
-      console.log(action)
+      return {
+        ...state,
+        isLoading: false,
+        comments: action.comments
+      }
+    }
+    case DELETE_COMMENT_SUCCESS: {
       return {
         ...state,
         isLoading: false,
