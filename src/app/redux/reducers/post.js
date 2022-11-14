@@ -3,6 +3,7 @@ import {
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
   GET_SECTION_POSTS_SUCCESS,
+  POST_COMMENT_SUCCESS,
   READ_POST_SUCCESS
 } from "../../constants/constants";
 
@@ -38,6 +39,13 @@ export default function postReducer(
       }
     }
     case READ_POST_SUCCESS: {
+      return {
+        ...state,
+        isLoading: false,
+        selectedPost: action.payload.payload.post
+      }
+    }
+    case POST_COMMENT_SUCCESS: {
       return {
         ...state,
         isLoading: false,

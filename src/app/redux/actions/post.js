@@ -1,6 +1,6 @@
 import {
   GET_POSTS,
-  GET_SECTION_POSTS,
+  GET_SECTION_POSTS, POST_COMMENT,
   READ_POST
 } from "../../constants/constants";
 
@@ -13,6 +13,13 @@ export const getPosts = () => {
 export const getSectionPosts = (payload) => {
   return {
     type: GET_SECTION_POSTS,
+    payload
+  };
+};
+
+export const postNewComment = (payload) => {
+  return {
+    type: POST_COMMENT,
     payload
   };
 };

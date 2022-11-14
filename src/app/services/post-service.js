@@ -13,3 +13,14 @@ export async function getAllSectionPosts(payload) {
   });
   return await response.data;
 }
+
+
+export async function postNewComment(payload) {
+  const response = await axios.post('/post/newComment', {
+    params: {
+      postId: payload.payload.id,
+      comment: payload.comment
+    }
+  });
+  return await response.data;
+}

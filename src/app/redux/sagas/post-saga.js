@@ -1,10 +1,15 @@
 import {call, put, takeEvery} from "redux-saga/effects";
-import {getAllPosts, getAllSectionPosts} from "../../services/post-service";
+import {
+  getAllPosts,
+  getAllSectionPosts,
+  postNewComment
+} from "../../services/post-service";
 import {
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
-  GET_SECTION_POSTS_SUCCESS,
+  GET_SECTION_POSTS_SUCCESS, POST_COMMENT,
+  POST_COMMENT_SUCCESS,
   READ_POST,
   READ_POST_SUCCESS
 } from "../../constants/constants";
@@ -40,9 +45,19 @@ function* readPost(payload) {
   }
 }
 
+function* postComment(payload) {
+  try {
+    yield call(() => postNewComment(payload))
+    yield put({type: POST_COMMENT_SUCCESS, payload});
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 function* postSaga() {
   yield takeEvery(GET_POSTS, getPosts);
   yield takeEvery(READ_POST, readPost);
+  yield takeEvery(POST_COMMENT, postComment);
   yield takeEvery(GET_SECTION_POSTS, getSectionPosts);
 }
 
