@@ -1,12 +1,13 @@
 import {
   LOGIN_USER,
   LOGOUT_USER,
-  REGISTER_USER, USER_INFO
+  SIGN_UP, USER_ERROR,
+  USER_INFO
 } from "../../constants/constants";
 
-export const registerUser = (payload) => {
+export const signUp = (payload) => {
   return {
-    type: REGISTER_USER,
+    type: SIGN_UP,
     payload,
   };
 };
@@ -21,6 +22,13 @@ export const loginAction = (payload) => {
 export const logoutAction = () => {
   return {
     type: LOGOUT_USER,
+  };
+};
+
+export const userError = (payload) => {
+  return {
+    type: USER_ERROR,
+    payload,
   };
 };
 

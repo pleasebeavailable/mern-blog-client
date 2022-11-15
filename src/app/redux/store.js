@@ -7,14 +7,15 @@ import {createBrowserHistory} from "history";
 import {createWouterHook} from "redux-first-history/wouter";
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
 import {persistReducer} from 'redux-persist'
+import {logger} from "redux-logger/src";
 
-// configuration
-const config = {
-  level: "log",
-  effectTrigger: true,
-  effectResolve: true,
-  actionDispatch: true
-};
+// configuration for saga
+// const config = {
+//   level: "log",
+//   effectTrigger: true,
+//   effectResolve: true,
+//   actionDispatch: true
+// };
 
 const persistConfig = {
   key: 'root',
@@ -41,8 +42,8 @@ const persistedReducer = persistReducer(persistConfig,
 export const store = configureStore({
       reducer: persistedReducer,
       initialState: {},
-      middleware: [sagaMiddleware, routerMiddleware]
-      // middleware: [sagaMiddleware, routerMiddleware, logger]
+      // middleware: [sagaMiddleware, routerMiddleware]
+      middleware: [sagaMiddleware, routerMiddleware, logger]
     }
 );
 

@@ -3,14 +3,26 @@ import {login, signup} from "../../services/user-service";
 import {
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
-  LOGOUT_USER, LOGOUT_USER_SUCCESS,
-  REGISTER_USER
+  LOGOUT_USER,
+  LOGOUT_USER_SUCCESS,
+  SIGN_UP,
+  SIGN_UP_SUCCESS,
+  USER_ERROR,
+  USER_ERROR_SUCCESS
 } from "../../constants/constants";
 import {push} from "redux-first-history";
 
 function* registerUser(payload) {
   try {
-    yield call(signup(payload));
+    const res = yield call(() => signup(payload));
+    console.log(res)
+    if (res.msg === undefined) {
+      yield put(push("/"));
+      yield put({type: SIGN_UP_SUCCESS, res});
+    } else {
+      yield put({type: USER_ERROR_SUCCESS, res})
+    }
+
   } catch (e) {
     console.log(e);
   }
@@ -35,11 +47,21 @@ function* logoutUser() {
   }
 }
 
+function* userError(payload) {
+  try {
+    console.log(payload)
+    yield put({type: USER_ERROR_SUCCESS, payload});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* userSaga() {
   try {
     yield takeEvery(LOGIN_USER, loginUser);
-    yield takeEvery(REGISTER_USER, registerUser);
+    yield takeEvery(SIGN_UP, registerUser);
     yield takeEvery(LOGOUT_USER, logoutUser);
+    yield takeEvery(USER_ERROR, userError);
   } catch (e) {
     console.error(e)
   }

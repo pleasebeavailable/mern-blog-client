@@ -3,8 +3,8 @@ export const NAVIGATE = 'NAVIGATE';
 export const NAVIGATE_SUCCESS = 'NAVIGATE_SUCCESS';
 
 // USER CONSTANTS
-export const REGISTER_USER = 'REGISTER_USER';
-export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
 export const LOGOUT_USER = 'LOGOUT_USER';
@@ -29,3 +29,7 @@ export const GET_SECTIONS_SUCCESS = 'GET_SECTIONS_SUCCESS';
 
 // RESET
 export const RESET = 'RESET'
+
+//ERROR
+export const USER_ERROR = 'USER_ERROR'
+export const USER_ERROR_SUCCESS = 'USER_ERROR_SUCCESS'

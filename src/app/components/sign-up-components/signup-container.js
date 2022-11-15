@@ -1,145 +1,79 @@
 import React from "react";
-import SignupRequest from "../../model/signup-request.js";
 import SignupForm from "./signup-form.js";
-import {signup} from "../../services/user-service";
+import {signUp, userError} from "../../redux/actions/user";
+import {useDispatch, useSelector} from "react-redux";
 
 const FormValidators = require("./validate");
 const validateSignUpForm = FormValidators.validateSignUpForm;
 const zxcvbn = require("zxcvbn");
 
-type SignUpState = {
-  errors: {};
-  btnTxt: "show";
-  user: SignupRequest;
-  type: "password";
-  score: "0";
-};
-
-class SignupContainer extends React.Component<{}, SignUpState> {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      errors: {},
-      user: new SignupRequest("", "", "", "", ""),
-      btnTxt: "show",
-      type: "password",
-      score: "0",
-    };
-
-    this.pwMask = this.pwMask.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.submitSignup = this.submitSignup.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-    this.pwHandleChange = this.pwHandleChange.bind(this);
-  }
-  handleChange(event) {
+export default function SignupContainer() {
+  const [user, setUser] = React.useState(
+      {username: "", email: "", password: "", pwconfirm: ""});
+  const [score, setScore] = React.useState("0");
+  const [btnText, setBtnText] = React.useState("show");
+  const [type, setType] = React.useState("password");
+  const dispatch = useDispatch();
+  const errors = useSelector(state => state.user.errors);
+  const handleChange = (event) => {
     const field = event.target.name;
-    const user = this.state.user;
     user[field] = event.target.value;
-
-    this.setState({
-      user,
-    });
+    setUser({...user});
   }
 
-  pwHandleChange(event) {
+  const pwHandleChange = (event) => {
     const field = event.target.name;
-    const user = this.state.user;
     user[field] = event.target.value;
-
-    this.setState({
-      user,
-    });
+    setUser({...user});
 
     if (event.target.value === "") {
-      this.setState((state) =>
-        Object.assign({}, state, {
-          score: "null",
-        })
-      );
+      setScore({score: null});
     } else {
-      var pw = zxcvbn(event.target.value);
-      this.setState((state) =>
-        Object.assign({}, state, {
-          score: pw.score + 1,
-        })
-      );
+      let pw = zxcvbn(event.target.value);
+      let score = pw.score + 1;
+      setScore(score);
     }
   }
-
-  submitSignup(user) {
-    var params = { username: user.usr, password: user.pw, email: user.email };
-    signup(params)
-      .then((res) => {
-        if (res.success === true) {
-          localStorage.token = res.token;
-          localStorage.isAuthenticated = true;
-          window.location.replace("/")
-        } else {
-          console.log(res)
-          this.setState({
-            errors: {message: res.msg},
-          });
-        }
-      })
-      .catch((err) => {
-        console.log("Sign up data submit error: ", err);
-      });
+  const submitSignup = () => {
+    dispatch(signUp(user))
   }
 
-  validateForm(event) {
+  const validateForm = (event) => {
     event.preventDefault();
-    var payload = validateSignUpForm(this.state.user);
+    let payload = validateSignUpForm(user);
     if (payload.success) {
-      this.setState({
-        errors: {},
-      });
-      var user = {
-        usr: this.state.user.username,
-        pw: this.state.user.password,
-        email: this.state.user.email,
-      };
-      this.submitSignup(user);
+      dispatch(userError(null));
+      submitSignup();
     } else {
       const errors = payload.errors;
-      this.setState({
-        errors,
-      });
+      dispatch(userError(errors));
     }
   }
 
-  pwMask(event) {
+  const pwMask = (event) => {
     event.preventDefault();
-    this.setState((state) =>
-      Object.assign({}, state, {
-        type: this.state.type === "password" ? "input" : "password",
-        btnTxt: this.state.btnTxt === "show" ? "hide" : "show",
-      })
-    );
+    let type = "password" ? "input" : "password";
+    let btnText = "show" ? "hide" : "show";
+    setType(type);
+    setBtnText(btnText);
   }
-
-  render() {
-    return (
-      <div>
+  return (<div>
         <SignupForm
-          onSubmit={this.validateForm}
-          onChange={this.handleChange}
-          onPwChange={this.pwHandleChange}
-          errors={this.state.errors}
-          user={this.state.user}
-          score={this.state.score}
-          btnTxt={this.state.btnTxt}
-          type={this.state.type}
-          pwMask={this.pwMask}
+            onSubmit={validateForm}
+            onChange={handleChange}
+            onPwChange={pwHandleChange}
+            errors={errors}
+            user={user}
+            score={score}
+            btnTxt={btnText}
+            type={type}
+            pwMask={pwMask}
         />
         {/*<p>*/}
         {/*  Go to home screen? <br/>*/}
         {/*  <div onClick={goToSignUp}>Home</div>*/}
         {/*</p>*/}
       </div>
-    );
-  }
+  );
 }
 
-export default SignupContainer;
