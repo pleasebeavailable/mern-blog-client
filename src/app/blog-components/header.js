@@ -21,7 +21,6 @@ export default function Header(props: Props) {
   const goToLoginForm = () => {
     dispatch(navigate({route: LOGIN_ROUTE}));
   };
-
   const logout = () => {
     dispatch(logoutAction())
   };
@@ -47,7 +46,7 @@ export default function Header(props: Props) {
               noWrap
               sx={{flex: 1}}
           >
-            Hello {user.user.username}
+            Hello {user.loggedUser.username}
           </Typography>}
           <Search style={{margin: "auto"}}/>
           {!user.isAuthenticated && <Button

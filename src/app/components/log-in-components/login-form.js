@@ -9,28 +9,26 @@ const LoginForm = ({
   goToSignUp,
   errors,
   user,
-  type,
-  onPwChange,
 }) => {
   return (
       <div className="loginBox">
         <h1>Log In</h1>
-        {errors.message && <p style={{color: "red"}}>{errors.message}</p>}
+        {errors.global !== '' && <p style={{color: "red"}}>{errors.global}</p>}
 
         <form onSubmit={onSubmit}>
           <TextField
-              name="username"
-              floatingLabelText="username/email"
-              value={user.username}
+              name="email"
+              floatingLabelText="email"
+              value={user.email}
               onChange={onChange}
-              errorText={errors.username}
+              errorText={errors.email}
           />
           <TextField
-              type={type}
+              type="password"
               name="password"
               floatingLabelText="password"
               value={user.password}
-              onChange={onPwChange}
+              onChange={onChange}
               errorText={errors.password}
           />
 

@@ -31,9 +31,14 @@ function* registerUser(payload) {
 
 function* loginUser(payload) {
   try {
-    const user = yield call(() => login(payload));
-    yield put(push("/"));
-    yield put({type: LOGIN_USER_SUCCESS, user});
+    const res = yield call(() => login(payload));
+    if (res.msg === undefined) {
+      yield put(push("/"));
+      yield put({type: LOGIN_USER_SUCCESS, res});
+    } else {
+      console.log(res)
+      yield put({type: USER_ERROR_SUCCESS, res})
+    }
   } catch (e) {
     console.log(e);
   }

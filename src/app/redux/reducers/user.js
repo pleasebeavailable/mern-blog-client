@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   user: {},
+  loggedUser: {},
   token: null,
   isAuthenticated: false,
   errors: {global: "", username: "", email: "", password: "", pwconfirm: ""}
@@ -24,9 +25,17 @@ export default function user(
     case LOGIN_USER_SUCCESS: {
       return Object.assign({}, state,
           {
-            isAuthenticated: action.user.success,
-            user: action.user.user,
-            token: action.user.token
+            isAuthenticated: action.res.success,
+            user: {},
+            loggedUser: action.res.user,
+            token: action.res.token,
+            errors: {
+              global: "",
+              username: "",
+              email: "",
+              password: "",
+              pwconfirm: ""
+            }
           })
     }
     case LOGOUT_USER_SUCCESS: {
@@ -50,11 +59,18 @@ export default function user(
       return Object.assign({}, state, {user: changedUser, errors: newErrors})
     }
     case USER_ERROR_SUCCESS: {
-      let type = "";
-      if (action.payload) {
-        type = Object.keys(action.payload.payload)[0];
-      }
-      return Object.assign({}, state, {errors: action.payload.payload})
+      let res = action.res;
+      return res === undefined ?
+          Object.assign({}, state, {errors: action.payload.payload}) :
+          Object.assign({}, state, {
+            errors: {
+              global: res.msg,
+              username: "",
+              email: "",
+              password: "",
+              pwconfirm: ""
+            }
+          })
 
     }
     case USER_INFO: {

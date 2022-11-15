@@ -1,121 +1,56 @@
 import React from "react";
-import LoginRequest from "../../model/login-request";
 import LoginForm from "./login-form";
-import {loginAction} from "../../redux/actions/user";
-import {connect} from "react-redux";
-import navigate from "../../redux/actions/navigate";
+import {handleChange, loginAction, userError} from "../../redux/actions/user";
+import {navigate} from "../../redux/actions/navigate";
+import {useDispatch, useSelector} from "react-redux";
 import {SIGNUP_ROUTE} from "../../constants/routes";
 
 const FormValidators = require("./validate");
 const validateLoginForm = FormValidators.validateLoginForm;
 const zxcvbn = require("zxcvbn");
 
-class LoginContainer extends React.Component {
-  constructor(props) {
-    super(props);
+export default function LoginContainer() {
+  const dispatch = useDispatch();
+  const errors = useSelector(state => state.user.errors);
+  const stateUser = useSelector(state => state.user.user);
 
-    this.state = {
-      errors: {},
-      user: new LoginRequest("", ""),
-      btnTxt: "show",
-      type: "password",
-    };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.validateForm = this.validateForm.bind(this);
-    this.pwHandleChange = this.pwHandleChange.bind(this);
-  }
-
-  handleChange(event) {
+  const handleFormChange = (event) => {
+    let user = {...stateUser}
     const field = event.target.name;
-    const user = this.state.user;
     user[field] = event.target.value;
-
-    this.setState({
-      user,
-    });
+    dispatch(handleChange(user));
+  }
+  const submitLogin = () => {
+    dispatch(loginAction(stateUser));
   }
 
-  pwHandleChange(event) {
-    const field = event.target.name;
-    const user = this.state.user;
-    user[field] = event.target.value;
-
-    this.setState({
-      user,
-    });
-
-    if (event.target.value === "") {
-      this.setState((state) =>
-          Object.assign({}, state, {
-            score: "null",
-          })
-      );
-    } else {
-      var pw = zxcvbn(event.target.value);
-      this.setState((state) =>
-          Object.assign({}, state, {
-            score: pw.score + 1,
-          })
-      );
-    }
+  const goToSignUp = () => {
+    dispatch(navigate({route: SIGNUP_ROUTE}));
   }
 
-  submitLogin(user) {
-    this.props.loginUser(user)
-  }
-
-  validateForm(event) {
+  const validateForm = (event) => {
     event.preventDefault();
-    var payload = validateLoginForm(this.state.user);
+    let payload = validateLoginForm(stateUser);
     if (payload.success) {
-      this.setState({
-        errors: {},
-      });
-      var user = {
-        email: this.state.user.username,
-        password: this.state.user.password,
-      };
-      this.submitLogin(user);
+      dispatch(userError(''));
+      submitLogin();
     } else {
       const errors = payload.errors;
-      this.setState({
-        errors,
-      });
+      dispatch(userError(errors));
     }
   }
 
-  pwMask(event) {
-    event.preventDefault();
-    this.setState((state) =>
-        Object.assign({}, state, {
-          type: this.state.type === "password" ? "input" : "password",
-          btnTxt: this.state.btnTxt === "show" ? "hide" : "show",
-        })
-    );
-  }
-
-  render() {
     return (
         <div>
           <LoginForm
-              onSubmit={this.validateForm}
-              onChange={this.handleChange}
-              onPwChange={this.pwHandleChange}
-              goToSignUp={this.props.goToSignUp}
-              errors={this.state.errors}
-              user={this.state.user}
-              type={this.state.type}
-              pwMask={this.pwMask}
+              onSubmit={validateForm}
+              onChange={handleFormChange}
+              goToSignUp={goToSignUp}
+              errors={errors}
+              user={stateUser}
           />
         </div>
     );
-  }
 }
 
-const mapDispatchToProps = dispatch => ({
-  loginUser: (data) => dispatch(loginAction(data)),
-  goToSignUp: () => dispatch(navigate({route: SIGNUP_ROUTE}))
-});
 
-export default connect(null, mapDispatchToProps)(LoginContainer);
