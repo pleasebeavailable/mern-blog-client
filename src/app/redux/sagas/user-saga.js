@@ -1,6 +1,8 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {login, signup} from "../../services/user-service";
 import {
+  HANDLE_USER_CHANGE,
+  HANDLE_USER_CHANGE_SUCCESS,
   LOGIN_USER,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER,
@@ -15,7 +17,6 @@ import {push} from "redux-first-history";
 function* registerUser(payload) {
   try {
     const res = yield call(() => signup(payload));
-    console.log(res)
     if (res.msg === undefined) {
       yield put(push("/"));
       yield put({type: SIGN_UP_SUCCESS, res});
@@ -49,8 +50,15 @@ function* logoutUser() {
 
 function* userError(payload) {
   try {
-    console.log(payload)
     yield put({type: USER_ERROR_SUCCESS, payload});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
+function* handleUserChange(payload) {
+  try {
+    yield put({type: HANDLE_USER_CHANGE_SUCCESS, payload});
   } catch (e) {
     console.log(e);
   }
@@ -62,6 +70,7 @@ function* userSaga() {
     yield takeEvery(SIGN_UP, registerUser);
     yield takeEvery(LOGOUT_USER, logoutUser);
     yield takeEvery(USER_ERROR, userError);
+    yield takeEvery(HANDLE_USER_CHANGE, handleUserChange);
   } catch (e) {
     console.error(e)
   }

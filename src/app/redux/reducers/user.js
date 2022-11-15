@@ -1,4 +1,5 @@
 import {
+  HANDLE_USER_CHANGE_SUCCESS,
   LOGIN_USER_SUCCESS,
   LOGOUT_USER_SUCCESS,
   SIGN_UP_SUCCESS,
@@ -32,38 +33,28 @@ export default function user(
       return Object.assign({}, state, initialState)
     }
     case SIGN_UP_SUCCESS: {
-      console.log(action)
-      return action.res.msg === undefined ?
-          Object.assign({}, state, initialState) :
-          Object.assign({}, state, {errors: action.res.msg})
+      return Object.assign({}, state, initialState);
+    }
+    case HANDLE_USER_CHANGE_SUCCESS: {
+      let user = {...state.user};
+      let changedUser = action.payload.payload;
+      let keys = Object.keys(action.payload.payload);
+      let changedKey;
+      for (const key of keys) {
+        if (changedUser[key] !== user[key]) {
+          changedKey = key;
+        }
+      }
+      let newErrors = {...state.errors};
+      newErrors[changedKey] = '';
+      return Object.assign({}, state, {user: changedUser, errors: newErrors})
     }
     case USER_ERROR_SUCCESS: {
       let type = "";
       if (action.payload) {
         type = Object.keys(action.payload.payload)[0];
       }
-      let newState;
-      switch (type) {
-        case 'email':
-          newState = {...state};
-          newState.errors.email = action.payload.payload[type];
-          return Object.assign({}, state, newState)
-        case 'username':
-          newState = {...state};
-          newState.errors.username = action.payload.payload[type];
-          return Object.assign({}, state, newState)
-        case 'password':
-          newState = {...state};
-          newState.errors.password = action.payload.payload[type];
-          return Object.assign({}, state, newState)
-        case 'pwconfirm':
-          newState = {...state};
-          newState.errors.pwconfirm = action.payload.payload[type];
-          return Object.assign({}, state, newState)
-        default:
-          newState = {...state};
-          state.errors.global = action.res.msg;
-      }
+      return Object.assign({}, state, {errors: action.payload.payload})
 
     }
     case USER_INFO: {

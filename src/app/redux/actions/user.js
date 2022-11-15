@@ -1,4 +1,5 @@
 import {
+  HANDLE_USER_CHANGE,
   LOGIN_USER,
   LOGOUT_USER,
   SIGN_UP, USER_ERROR,
@@ -22,6 +23,13 @@ export const loginAction = (payload) => {
 export const logoutAction = () => {
   return {
     type: LOGOUT_USER,
+  };
+};
+
+export const handleChange = (payload) => {
+  return {
+    type: HANDLE_USER_CHANGE,
+    payload
   };
 };
 

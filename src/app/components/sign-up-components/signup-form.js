@@ -18,7 +18,7 @@ const SignupForm = ({
   return (
       <div className="loginBox">
         <h1>Sign Up</h1>
-        {errors.message && <p style={{ color: "red" }}>{errors.message}</p>}
+        {errors.global !== '' && <p style={{color: "red"}}>{errors.global}</p>}
 
         <form onSubmit={onSubmit}>
           <TextField

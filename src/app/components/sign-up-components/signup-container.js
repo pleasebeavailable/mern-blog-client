@@ -1,6 +1,6 @@
 import React from "react";
 import SignupForm from "./signup-form.js";
-import {signUp, userError} from "../../redux/actions/user";
+import {handleChange, signUp, userError} from "../../redux/actions/user";
 import {useDispatch, useSelector} from "react-redux";
 
 const FormValidators = require("./validate");
@@ -8,23 +8,24 @@ const validateSignUpForm = FormValidators.validateSignUpForm;
 const zxcvbn = require("zxcvbn");
 
 export default function SignupContainer() {
-  const [user, setUser] = React.useState(
-      {username: "", email: "", password: "", pwconfirm: ""});
   const [score, setScore] = React.useState("0");
   const [btnText, setBtnText] = React.useState("show");
   const [type, setType] = React.useState("password");
   const dispatch = useDispatch();
   const errors = useSelector(state => state.user.errors);
-  const handleChange = (event) => {
+  const stateUser = useSelector(state => state.user.user);
+  const handleFormChange = (event) => {
+    let user = {...stateUser}
     const field = event.target.name;
     user[field] = event.target.value;
-    setUser({...user});
+    dispatch(handleChange(user));
   }
 
   const pwHandleChange = (event) => {
+    let user = {...stateUser}
     const field = event.target.name;
     user[field] = event.target.value;
-    setUser({...user});
+    dispatch(handleChange(user));
 
     if (event.target.value === "") {
       setScore({score: null});
@@ -35,14 +36,15 @@ export default function SignupContainer() {
     }
   }
   const submitSignup = () => {
-    dispatch(signUp(user))
+    dispatch(signUp(stateUser))
   }
 
   const validateForm = (event) => {
     event.preventDefault();
-    let payload = validateSignUpForm(user);
+    let payload = validateSignUpForm(stateUser);
+    console.log(payload)
     if (payload.success) {
-      dispatch(userError(null));
+      dispatch(userError(''));
       submitSignup();
     } else {
       const errors = payload.errors;
@@ -60,10 +62,10 @@ export default function SignupContainer() {
   return (<div>
         <SignupForm
             onSubmit={validateForm}
-            onChange={handleChange}
+            onChange={handleFormChange}
             onPwChange={pwHandleChange}
             errors={errors}
-            user={user}
+            user={stateUser}
             score={score}
             btnTxt={btnText}
             type={type}
