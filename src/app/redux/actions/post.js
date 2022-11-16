@@ -1,7 +1,9 @@
 import {
+  CREATE_POST,
   DELETE_COMMENT,
   GET_POSTS,
   GET_SECTION_POSTS,
+  HANDLE_POST_CHANGE,
   POST_COMMENT,
   READ_POST
 } from "../../constants/constants";
@@ -15,6 +17,13 @@ export const getPosts = () => {
 export const getSectionPosts = (payload) => {
   return {
     type: GET_SECTION_POSTS,
+    payload
+  };
+};
+
+export const createPost = (payload) => {
+  return {
+    type: CREATE_POST,
     payload
   };
 };
@@ -39,5 +48,12 @@ export const readPost = (payload) => {
     payload
   }
 }
+
+export const handleChange = (payload) => {
+  return {
+    type: HANDLE_POST_CHANGE,
+    payload
+  };
+};
 
 export default getPosts;

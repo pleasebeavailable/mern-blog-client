@@ -1,5 +1,6 @@
 import {call, put, takeEvery} from "redux-saga/effects";
 import {
+  createNewPost,
   deleteSelectedComment,
   getAllPosts,
   getAllSectionPosts,
@@ -7,12 +8,16 @@ import {
   postNewComment
 } from "../../services/post-service";
 import {
+  CREATE_POST,
+  CREATE_POST_SUCCESS,
   DELETE_COMMENT,
   DELETE_COMMENT_SUCCESS,
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
   GET_SECTION_POSTS_SUCCESS,
+  HANDLE_POST_CHANGE,
+  HANDLE_POST_CHANGE_SUCCESS,
   POST_COMMENT,
   POST_COMMENT_SUCCESS,
   READ_POST,
@@ -52,6 +57,17 @@ function* readPost(payload) {
   }
 }
 
+function* createPost(payload) {
+  try {
+    yield call(() => createNewPost(payload))
+    const posts = yield call(() => getAllPosts())
+    yield put(push("/"));
+    yield put({type: CREATE_POST_SUCCESS, posts});
+  } catch (err) {
+    console.log(err)
+  }
+}
+
 function* postComment(payload) {
   try {
     yield call(() => postNewComment(payload))
@@ -72,12 +88,22 @@ function* deleteComment(payload) {
   }
 }
 
+function* handlePostChange(payload) {
+  try {
+    yield put({type: HANDLE_POST_CHANGE_SUCCESS, payload});
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 function* postSaga() {
   yield takeEvery(GET_POSTS, getPosts);
   yield takeEvery(READ_POST, readPost);
   yield takeEvery(POST_COMMENT, postComment);
   yield takeEvery(DELETE_COMMENT, deleteComment);
   yield takeEvery(GET_SECTION_POSTS, getSectionPosts);
+  yield takeEvery(CREATE_POST, createPost);
+  yield takeEvery(HANDLE_POST_CHANGE, handlePostChange);
 }
 
 export default postSaga;

@@ -11,6 +11,8 @@ import LoginContainer from "./app/components/log-in-components/login-container";
 import PostScreen from "./app/components/post-components/post-screen";
 import SectionPosts
   from "./app/components/section-post-components/section-posts";
+import CreatePostContainer
+  from "./app/components/create-post-components/create-post-container";
 
 const theme = createTheme();
 
@@ -27,6 +29,7 @@ class App extends React.Component {
                 <Route exact path="/login" element={<LoginContainer/>}/>
                 <Route exact path="/post" element={<PostScreen/>}/>
                 <Route exact path="/section-posts" element={<SectionPosts/>}/>
+                <Route exact path="/create-post" element={<CreatePostContainer/>}/>
               </Routes>
             </ThemeProvider>
           </MuiThemeProvider>

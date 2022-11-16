@@ -1,15 +1,18 @@
 import {
+  CREATE_POST_SUCCESS,
   DELETE_COMMENT_SUCCESS,
   GET_POSTS,
   GET_POSTS_SUCCESS,
   GET_SECTION_POSTS,
   GET_SECTION_POSTS_SUCCESS,
+  HANDLE_POST_CHANGE_SUCCESS,
   POST_COMMENT_SUCCESS,
   READ_POST_SUCCESS
 } from "../../constants/constants";
 
 const initialState = {
   posts: [],
+  newPost: {},
   selectedPost: {},
   selectedSection: "",
   comments: [],
@@ -62,6 +65,20 @@ export default function postReducer(
         comments: action.comments
       }
     }
+    case CREATE_POST_SUCCESS: {
+      return {
+        ...state,
+        posts: action.posts,
+        newPost: {}
+      }
+    }
+    case HANDLE_POST_CHANGE_SUCCESS: {
+      return {
+        ...state,
+        newPost: action.payload.payload
+      }
+    }
+
     default:
       return state;
   }
