@@ -36,7 +36,6 @@ function* loginUser(payload) {
       yield put(push("/"));
       yield put({type: LOGIN_USER_SUCCESS, res});
     } else {
-      console.log(res)
       yield put({type: USER_ERROR_SUCCESS, res})
     }
   } catch (e) {

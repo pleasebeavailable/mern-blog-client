@@ -42,7 +42,6 @@ export default function SignupContainer() {
   const validateForm = (event) => {
     event.preventDefault();
     let payload = validateSignUpForm(stateUser);
-    console.log(payload)
     if (payload.success) {
       dispatch(userError(''));
       submitSignup();
