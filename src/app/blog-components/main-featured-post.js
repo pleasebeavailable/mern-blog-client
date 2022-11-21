@@ -21,6 +21,7 @@ export default function MainFeaturedPost() {
     if (posts.length === 0) {
       return <div/>
     } else {
+      const imageContent = post.imageContent ? JSON.parse(post.imageContent) : "";
       return <Paper
           sx={{
             position: 'relative',
@@ -30,11 +31,11 @@ export default function MainFeaturedPost() {
             backgroundSize: 'cover',
             backgroundRepeat: 'no-repeat',
             backgroundPosition: 'center',
-            backgroundImage: `url(${post.imageUrl})`,
+            backgroundImage: `url(${imageContent})`,
           }}
       >
         {/* Increase the priority of the hero background image */}
-        {<img style={{display: 'none'}} src={post.imageUrl}
+        {imageContent !== "" && <img style={{display: 'none'}} src={post.imageContent}
               alt={post.imageLabel}/>}
         <Box
             sx={{

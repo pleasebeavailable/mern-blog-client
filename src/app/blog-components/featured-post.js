@@ -21,6 +21,7 @@ export default function FeaturedPost(props: FeaturedPostProps) {
   const goToPostScreen = () => {
     dispatch(readPost({route: READ_POST, post}));
   };
+  const imageContent = post.imageContent ? JSON.parse(post.imageContent) : "";
   return (
       <Grid item xs={12} md={6}>
         <Card sx={{display: 'flex'}}>
@@ -41,12 +42,12 @@ export default function FeaturedPost(props: FeaturedPostProps) {
               {post.linkText}
             </Link>
           </CardContent>
-          <CardMedia
+          {imageContent !== "" && <CardMedia
               component="img"
               sx={{width: 160, display: {xs: 'none', sm: 'block'}}}
-              image={post.imageUrl}
+              image={imageContent}
               alt={post.imageLabel}
-          />
+          />}
         </Card>
       </Grid>
   );

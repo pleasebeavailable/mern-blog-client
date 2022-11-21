@@ -4,11 +4,14 @@ import {TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import RaisedButton from "material-ui/RaisedButton";
+import Container from "@mui/material/Container";
 
 const CreatePostForm = ({
   post,
   onSubmit,
   onChange,
+  uploadButton,
+  uploadedContent,
 }) => {
   return (
       <div className="createPostBox">
@@ -54,13 +57,18 @@ const CreatePostForm = ({
                 onChange={onChange}
             />
           </Box>
-          <RaisedButton
-              onClick={onSubmit}
-              className="createPostButton"
-              primary={true}
-              type="submit"
-              label="submit"
-          />
+          <Container>
+            <RaisedButton
+                onClick={onSubmit}
+                className="createPostButton"
+                primary={true}
+                type="submit"
+                label="submit"
+
+            />
+            {uploadButton}
+          </Container>
+          {uploadedContent}
         </Box>
       </div>
 

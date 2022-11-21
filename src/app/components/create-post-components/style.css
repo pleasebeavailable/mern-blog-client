@@ -1,6 +1,6 @@
 .createPostBox {
     width: 80%;
-    height:600px;
+    height:700px;
     text-align: center;
     position: relative;
     left: 50%;
@@ -14,7 +14,6 @@
     display: inline-block;
     justify-content: center;
     align-items: center;
-    margin-left: 80px;
 }
 .centerBox {
     display: flex;
