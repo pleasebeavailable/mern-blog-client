@@ -1,13 +1,15 @@
 import React from "react";
 import "./style.css";
-import {TextField} from "@mui/material";
+import {MenuItem, Select, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import RaisedButton from "material-ui/RaisedButton";
 import Container from "@mui/material/Container";
+import Section from "../../model/section";
 
 const CreatePostForm = ({
   post,
+  sections,
   onSubmit,
   onChange,
   uploadButton,
@@ -43,6 +45,22 @@ const CreatePostForm = ({
                 value={post.title}
                 onChange={onChange}
             />
+          </Box>
+          <Box className={"selectBox"}>
+            <Select
+                sx={{
+                  width: "70%"
+                }}
+                name="section"
+                labelId="demo-select-small"
+                id="demo-simple-select"
+                value={post.section}
+                onChange={onChange}
+            >
+              {sections.map((section: Section) => (
+                  <MenuItem value={section.title}>{section.title}</MenuItem>
+              ))}
+            </Select>
           </Box>
           <Box className={"centerBox"}>
             <TextField

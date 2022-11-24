@@ -9,6 +9,8 @@ import Box from "@mui/material/Box";
 export default function CreatePostContainer() {
   const dispatch = useDispatch();
   const post = useSelector(state => state.post.newPost);
+  const sections = useSelector(state => state.section.sections);
+
   const [openFileSelector, {filesContent, loading}] = useFilePicker({
     readAs: 'DataURL',
     accept: 'image/*',
@@ -16,6 +18,7 @@ export default function CreatePostContainer() {
   const handleFormChange = (event) => {
     let newPost = {...post}
     const field = event.target.name;
+    console.log(event.target)
     newPost[field] = event.target.value;
     dispatch(handleChange(newPost));
   }
@@ -52,6 +55,7 @@ export default function CreatePostContainer() {
         uploadButton=<UploadButton/>
     uploadedContent=<UploadedContent/>
     post={post}
+    sections={sections}
     />
   </div>);
 }
