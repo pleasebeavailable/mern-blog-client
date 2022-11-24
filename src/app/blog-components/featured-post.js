@@ -39,7 +39,7 @@ export default function FeaturedPost(props: FeaturedPostProps) {
                   noWrap
                   variant="body2"
                   onClick={goToPostScreen}>
-              {post.linkText}
+              Continue reading...
             </Link>
           </CardContent>
           {imageContent !== "" && <CardMedia

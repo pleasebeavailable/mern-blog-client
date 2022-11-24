@@ -1,39 +1,22 @@
-import React from "react";
-import {connect} from "react-redux";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
 import getPosts from "../../redux/actions/post";
 import FeaturedPosts from "./featured-posts";
 
-class PostDataPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLoaded: props.isLoaded, posts: props.posts, error: {}
-    };
-  }
-
-  componentDidMount() {
-    try {
-      this.props.setPosts();
-    } catch (err) {
-      console.log(err)
+export default function PostDataPage() {
+  const isLoading = useSelector(state => state.post.isLoading);
+  const posts = useSelector(state => state.post.posts);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (posts.length === 0) {
+      dispatch(getPosts());
     }
-  }
+  }, []);
 
-  render() {
-    return (<React.Fragment>
-      {this.state.isLoading && <p>Loading...</p>}
-      {!this.state.isLoading && <FeaturedPosts/>}
-    </React.Fragment>);
-  }
+  return (<React.Fragment>
+    {isLoading && posts === null && <p> Loading...</p>}
+    {!isLoading && posts !== null && <FeaturedPosts/>}
+  </React.Fragment>);
 }
 
-const mapDispatchToProps = dispatch => ({
-  setPosts: () => dispatch(getPosts())
-});
 
-const mapStateToProps = state => ({
-  posts: state.post.posts,
-  isLoading: state.post.isLoading
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PostDataPage);
